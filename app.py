@@ -25,16 +25,17 @@ costo_mantenimiento = km_recorridos * tasa_desgaste
 costos_totales = gasto_combustible + comision_monto + costo_mantenimiento
 ganancia_neta = ingreso_bruto - costos_totales
 
-costo_por_km = (costos_totales / km_recorridos) if km_recorridos > 0 else 0
-margen_por_km = (ganancia_neta / km_recorridos) if km_recorridos > 0 else 0
+# Ratios por kilómetro
+ingreso_por_km = (ingreso_bruto / km_recorridos) if km_recorridos > 0 else 0
+margen_neto_por_km = (ganancia_neta / km_recorridos) if km_recorridos > 0 else 0
 
 st.divider()
 
-# Métricas destacadas
 st.subheader("Balance del Día")
-m1, m2 = st.columns(2)
-m1.metric(label="Ganancia Neta Real", value=f"S/. {ganancia_neta:.2f}")
-m2.metric(label="Margen por Km", value=f"S/. {margen_por_km:.2f}/km")
+m1, m2, m3 = st.columns(3)
+m1.metric(label="Ganancia Neta", value=f"S/. {ganancia_neta:.2f}")
+m2.metric(label="Facturado / km", value=f"S/. {ingreso_por_km:.2f}/km")
+m3.metric(label="Ganancia Libre / km", value=f"S/. {margen_neto_por_km:.2f}/km")
 
 with st.expander("Ver desglose de costos detallado"):
     st.write(f"- **Comisión retenida:** S/. {comision_monto:.2f}")
